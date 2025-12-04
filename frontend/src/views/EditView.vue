@@ -125,7 +125,7 @@ onMounted(() => {
           <el-radio-button :label="null">未标注</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="正文" prop="content">
+      <el-form-item label="正文" prop="content" class="rich-text-item">
         <QuillEditor
           v-model:content="form.content"
           theme="snow"
@@ -134,10 +134,10 @@ onMounted(() => {
           class="editor"
         />
       </el-form-item>
-      <el-form-item>
+      <el-form-item class="actions-item">
         <div class="actions">
-          <el-button :icon="Close" @click="handleCancel">取消</el-button>
-          <el-button type="primary" :icon="Check" @click="handleSubmit">保存</el-button>
+          <el-button :icon="Close" size="large" @click="handleCancel">取消</el-button>
+          <el-button type="primary" :icon="Check" size="large" @click="handleSubmit">保存</el-button>
         </div>
       </el-form-item>
     </el-form>
@@ -170,12 +170,39 @@ onMounted(() => {
   border-radius: 14px;
   padding: 20px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 .editor {
-  height: 360px;
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.editor :global(.ql-toolbar) {
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+.editor :global(.ql-container) {
+  border: none !important;
+  min-height: 360px;
+  background: #fff;
+}
+.editor :global(.ql-editor) {
+  min-height: 280px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.actions-item .el-form-item__content {
+  justify-content: flex-end;
 }
 .actions {
-  display: flex;
-  gap: 10px;
+  display: inline-flex;
+  gap: 12px;
+}
+.rich-text-item .el-form-item__content {
+  flex-direction: column;
 }
 </style>
