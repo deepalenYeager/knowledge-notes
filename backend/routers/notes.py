@@ -2,8 +2,7 @@ from datetime import datetime
 from typing import Dict, List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import func, select
-from sqlmodel import Session
+from sqlmodel import Session, func, select
 
 from ..database import get_session
 from ..models import KnowledgeItem

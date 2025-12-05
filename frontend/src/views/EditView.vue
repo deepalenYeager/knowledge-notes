@@ -16,6 +16,11 @@ const noteId = idParam ? Number(idParam) : null
 
 const formRef = ref<FormInstance>()
 const loading = ref(false)
+const toolbarOptions = [
+  ['bold', 'italic', 'underline'],
+  [{ list: 'ordered' }, { list: 'bullet' }],
+  ['link'],
+]
 
 const form = reactive({
   title: '',
@@ -98,42 +103,48 @@ onMounted(() => {
       </div>
     </div>
 
-    <el-form ref="formRef" :model="form" :rules="rules" label-width="90px" class="form">
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="form.title" placeholder="一句话描述知识点" />
-      </el-form-item>
-      <el-form-item label="标签">
-        <el-select
-          v-model="form.tags"
-          multiple
-          filterable
-          allow-create
-          default-first-option
-          placeholder="添加或选择标签"
-        >
-          <el-option v-for="tag in availableTags" :key="tag" :label="tag" :value="tag" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="来源">
-        <el-input v-model="form.source" placeholder="例如：书籍、链接、课程..." />
-      </el-form-item>
-      <el-form-item label="难度">
-        <el-radio-group v-model="form.difficulty">
-          <el-radio-button :label="0">简单</el-radio-button>
-          <el-radio-button :label="1">一般</el-radio-button>
-          <el-radio-button :label="2">较难</el-radio-button>
-          <el-radio-button :label="null">未标注</el-radio-button>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="正文" prop="content" class="rich-text-item">
-        <QuillEditor
-          v-model:content="form.content"
-          theme="snow"
-          toolbar="full"
-          content-type="html"
-          class="editor"
-        />
-      </el-form-item>
+    <el-form ref="formRef" :model="form" :rules="rules" label-position="top" class="form">
+      <div class="form-grid">
+        <div class="meta-column">
+          <el-form-item label="标题" prop="title">
+            <el-input v-model="form.title" placeholder="一句话描述知识点" />
+          </el-form-item>
+          <el-form-item label="标签">
+            <el-select
+              v-model="form.tags"
+              multiple
+              filterable
+              allow-create
+              default-first-option
+              placeholder="添加或选择标签"
+            >
+              <el-option v-for="tag in availableTags" :key="tag" :label="tag" :value="tag" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="难度">
+            <el-radio-group v-model="form.difficulty">
+              <el-radio-button :label="0">简单</el-radio-button>
+              <el-radio-button :label="1">一般</el-radio-button>
+              <el-radio-button :label="2">较难</el-radio-button>
+              <el-radio-button :label="null">未标注</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="来源">
+            <el-input v-model="form.source" placeholder="例如：书籍、链接、课程..." />
+          </el-form-item>
+        </div>
+        <div class="content-column">
+          <el-form-item label="正文" prop="content" class="rich-text-item">
+            <QuillEditor
+              v-model:content="form.content"
+              theme="snow"
+              :toolbar="toolbarOptions"
+              content-type="html"
+              class="editor"
+            />
+          </el-form-item>
+        </div>
+      </div>
       <el-form-item class="actions-item">
         <div class="actions">
           <el-button :icon="Close" size="large" @click="handleCancel">取消</el-button>
@@ -146,9 +157,9 @@ onMounted(() => {
 
 <style scoped>
 .edit-page {
-  max-width: 960px;
+  width: 100%;
   margin: 0 auto;
-  padding: 24px 18px 40px;
+  padding: 24px clamp(14px, 4vw, 34px) 40px;
 }
 .header {
   display: flex;
@@ -172,7 +183,22 @@ onMounted(() => {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.meta-column,
+.content-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.content-column .rich-text-item {
+  height: 100%;
 }
 .editor {
   width: 100%;
@@ -187,7 +213,7 @@ onMounted(() => {
 }
 .editor :global(.ql-container) {
   border: none !important;
-  min-height: 360px;
+  min-height: 420px;
   background: #fff;
 }
 .editor :global(.ql-editor) {
@@ -198,11 +224,28 @@ onMounted(() => {
 .actions-item .el-form-item__content {
   justify-content: flex-end;
 }
+.actions-item {
+  margin-top: -4px;
+}
 .actions {
   display: inline-flex;
   gap: 12px;
 }
 .rich-text-item .el-form-item__content {
   flex-direction: column;
+}
+.content-column :global(.el-form-item) {
+  height: 100%;
+}
+.content-column :global(.el-form-item__content) {
+  height: 100%;
+}
+.content-column :global(.ql-container) {
+  min-height: 420px;
+}
+@media (max-width: 960px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

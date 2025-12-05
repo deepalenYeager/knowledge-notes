@@ -111,9 +111,9 @@ onMounted(async () => {
 
 <style scoped>
 .page {
-  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
-  padding: 28px 32px 40px;
+  padding: 28px clamp(16px, 4vw, 36px) 40px;
 }
 .topbar {
   display: flex;
@@ -144,7 +144,7 @@ onMounted(async () => {
 }
 .board {
   display: grid;
-  grid-template-columns: 360px 1fr;
+  grid-template-columns: minmax(320px, 380px) 1fr;
   gap: 16px;
   min-height: calc(100vh - 180px);
 }
