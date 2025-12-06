@@ -241,6 +241,7 @@ onMounted(() => {
   gap: 0;
   height: 100%;
   width: 100%;
+  min-height: 0;
 }
 
 /* --- Left Panel (Metadata) --- */
@@ -293,8 +294,10 @@ onMounted(() => {
   background-color: #f1f5f9;
   padding: 0;
   overflow: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 /* Make the form item + content fill the space */
@@ -305,6 +308,7 @@ onMounted(() => {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 /* Ensure Element Plus form-item content stretches */
@@ -313,9 +317,10 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   padding: 0;
+  min-height: 0;
 }
 
-/* Quill Editor Container – no card, full height */
+/* Quill Editor Container - no card, full height */
 .editor-container {
   flex: 1;
   display: flex;
@@ -324,6 +329,7 @@ onMounted(() => {
   border-radius: 0;
   box-shadow: none;
   width: 100%;
+  min-height: 0;
 }
 
 /* Quill root */
@@ -332,9 +338,10 @@ onMounted(() => {
   flex-direction: column;
   flex: 1;
   width: 100%;
+  min-height: 0;
 }
 
-/* Toolbar – borderless, stick to top */
+/* Toolbar - borderless, stick to top */
 .custom-quill :deep(.ql-toolbar) {
   border: none;
   border-bottom: 1px solid #e2e8f0;
@@ -347,20 +354,21 @@ onMounted(() => {
   z-index: 5;
 }
 
-/* Content container – full height, no border */
+/* Content container - full height, no border */
 .custom-quill :deep(.ql-container) {
   border: none;
   font-size: 16px;
   line-height: 1.8;
   flex: 1;
   width: 100%;
+  min-height: 0;
 }
 
-/* Editor – this is the text area */
+/* Editor - this is the text area */
 .custom-quill :deep(.ql-editor) {
   padding: 16px 20px;
   height: 100%;
-  min-height: auto;
+  min-height: 0;
 }
 
 /* Responsive */
